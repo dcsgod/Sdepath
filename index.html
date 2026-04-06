@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayushi — 7-Month Full Stack + DevOps Roadmap</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0f0c29;--bg2:#1a1740;--bg3:#221f4a;
+    --card:#1e1b3a;--card2:#252245;
+    --blue:#4f8ef7;--purple:#a855f7;--teal:#2dd4bf;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--pink:#ec4899;
+    --text:#e2e0ff;--muted:#8b85c1;--border:#2e2a5a;
+    --grad:linear-gradient(135deg,#4f8ef7,#a855f7)
+  }
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  
+  /* TOP PROGRESS BAR */
+  #topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,12,41,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{font-size:18px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-right:8px;flex-shrink:0}
+  .nav-tabs{display:flex;gap:4px;flex-wrap:wrap;flex:1}
+  .tab{padding:5px 11px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;white-space:nowrap}
+  .tab:hover{border-color:var(--blue);color:var(--blue)}
+  .tab.active{background:var(--grad);border-color:transparent;color:#fff;font-weight:600}
+  .tab.done{border-color:var(--green);color:var(--green)}
+  .overall-bar{width:100%;height:3px;background:var(--border);border-radius:2px}
+  .overall-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .5s}
+
+  /* MAIN */
+  main{max-width:1100px;margin:0 auto;padding:80px 16px 40px}
+
+  /* HOME */
+  #page-home{display:block}
+  .hero{text-align:center;padding:40px 0 32px}
+  .hero h1{font-size:clamp(28px,5vw,48px);font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+  .hero p{color:var(--muted);font-size:15px;max-width:560px;margin:0 auto 24px}
+  .overall-stat{font-size:13px;color:var(--muted);margin-top:8px}
+  .month-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;margin-top:8px}
+  .month-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;transition:all .2s}
+  .month-card:hover{border-color:var(--blue);transform:translateY(-2px)}
+  .month-card.complete{border-color:var(--green)}
+  .mc-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .mc-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+  .mc-title{font-size:14px;font-weight:600;line-height:1.3}
+  .mc-sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .mc-bar-wrap{height:6px;background:var(--border);border-radius:3px;margin:10px 0 6px}
+  .mc-bar{height:100%;border-radius:3px;transition:width .5s}
+  .mc-pct{font-size:12px;color:var(--muted)}
+  .badge-done{font-size:11px;background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3);padding:2px 8px;border-radius:10px}
+
+  /* MONTH PAGE */
+  .month-page{display:none}
+  .month-page.active{display:block}
+  .month-header{padding:24px 0 20px;border-bottom:1px solid var(--border);margin-bottom:24px}
+  .mh-top{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  .mh-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+  .mh-info h2{font-size:clamp(18px,3vw,26px);font-weight:700;margin-bottom:4px}
+  .mh-info p{color:var(--muted);font-size:14px}
+  .mh-stats{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+  .mh-stat{font-size:13px;color:var(--muted)}
+  .mh-stat b{color:var(--text)}
+  .progress-row{display:flex;align-items:center;gap:12px;margin-top:16px}
+  .progress-wrap{flex:1;height:8px;background:var(--border);border-radius:4px}
+  .progress-fill{height:100%;border-radius:4px;transition:width .4s}
+  .progress-pct{font-size:14px;font-weight:600;min-width:40px;text-align:right}
+
+  /* SECTIONS */
+  .section{margin-bottom:32px}
+  .section-title{font-size:16px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .section-title::before{content:'';display:inline-block;width:3px;height:18px;border-radius:2px;background:var(--grad)}
+
+  /* SKILLS CHIPS */
+  .skills-wrap{display:flex;flex-wrap:wrap;gap:8px}
+  .skill-chip{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--muted)}
+
+  /* TOPICS */
+  .topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+  .topic-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;transition:all .2s}
+  .topic-item:hover{border-color:var(--blue)}
+  .topic-item.checked{background:rgba(34,197,94,0.05);border-color:rgba(34,197,94,0.3)}
+  .topic-item.checked .topic-text{text-decoration:line-through;color:var(--muted)}
+  .chk{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px}
+  .chk.on{background:var(--green);border-color:var(--green)}
+  .chk.on::after{content:'✓';font-size:11px;color:#fff;font-weight:700}
+  .topic-text{font-size:13px;line-height:1.4}
+
+  /* RESOURCES */
+  .resources-outer{display:flex;flex-direction:column;gap:20px}
+  .res-block{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .res-block-title{padding:12px 16px;background:var(--card2);font-size:14px;font-weight:600;border-bottom:1px solid var(--border)}
+  .res-links{padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+  .res-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);padding:8px 10px;border-radius:8px;transition:background .2s;font-size:13px}
+  .res-link:hover{background:var(--bg3)}
+  .res-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .yt{background:rgba(239,68,68,0.15);color:#ef4444}
+  .ud{background:rgba(168,85,247,0.15);color:#a855f7}
+  .doc{background:rgba(79,142,247,0.15);color:#4f8ef7}
+  .res-meta{flex:1;min-width:0}
+  .res-meta b{display:block;font-size:13px}
+  .res-meta span{font-size:11px;color:var(--muted)}
+  .res-arrow{color:var(--muted);font-size:12px}
+
+  /* RESET BTN */
+  .reset-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:12px;transition:all .2s}
+  .reset-btn:hover{border-color:var(--red);color:var(--red)}
+
+  /* CONFETTI */
+  #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999}
+
+  /* COMPLETE BANNER */
+  .complete-banner{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  .cb-icon{font-size:24px}
+  .cb-text b{display:block;color:var(--green);font-size:15px}
+  .cb-text span{font-size:13px;color:var(--muted)}
+
+  /* BACK BTN */
+  .back-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13px;margin-bottom:20px;display:inline-flex;align-items:center;gap:6px;transition:all .2s}
+  .back-btn:hover{border-color:var(--blue);color:var(--blue)}
+
+  @media(max-width:600px){
+    .mh-top{flex-direction:column}
+    .topics-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div id="topbar">
+  <div class="nav-inner">
+    <div class="logo">Ayushi-DevPath</div>
+    <div class="nav-tabs">
+      <button class="tab active" onclick="showPage('home')" id="tab-home">Overview</button>
+      <button class="tab" onclick="showPage(0)" id="tab-0">M1</button>
+      <button class="tab" onclick="showPage(1)" id="tab-1">M2</button>
+      <button class="tab" onclick="showPage(2)" id="tab-2">M3</button>
+      <button class="tab" onclick="showPage(3)" id="tab-3">M4</button>
+      <button class="tab" onclick="showPage(4)" id="tab-4">M5</button>
+      <button class="tab" onclick="showPage(5)" id="tab-5">M6</button>
+      <button class="tab" onclick="showPage(6)" id="tab-6">M7</button>
+    </div>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;padding:0 16px 8px">
+    <div class="overall-bar"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<main>
+<!-- HOME -->
+<div id="page-home">
+  <div class="hero">
+    <h1>Full Stack + DevOps Roadmap</h1>
+    <p>7-month structured path to 30 LPA+ roles. Track your progress, access curated resources, and build production-grade skills.</p>
+    <div class="overall-stat" id="overall-stat">0 of 0 tasks complete — 0% overall</div>
+  </div>
+  <div class="month-grid" id="month-grid"></div>
+  <div style="margin-top:32px;padding:20px;background:var(--card);border:1px solid var(--border);border-radius:14px">
+  </div> 
+</div>
+
+<!-- MONTH PAGES -->
+<div id="page-months"></div>
+</main>
+
+<script>
+const MONTHS = [
+  {
+    title:"Python Mastery + Advanced Backend with FastAPI",
+    goal:"Production-grade FastAPI service with async DB, OAuth2, refresh tokens, and full linting pipeline on GitHub",
+    color:"#4f8ef7",bg:"rgba(79,142,247,0.15)",icon:"🐍",
+    skills:["FastAPI","asyncio","SQLAlchemy 2","Pydantic v2","DRF","JWT","Poetry","mypy"],
+    topics:[
+      "Python internals: GIL, memory model, reference counting, garbage collection",
+      "Generators, iterators, coroutines, context managers",
+      "Decorators, metaclasses, descriptors, __slots__",
+      "Concurrency: threading, multiprocessing, asyncio deep-dive",
+      "Type hints, Pydantic v2, dataclasses, attrs",
+      "FastAPI: dependency injection, routers, middleware, lifespan",
+      "Pydantic schemas, request validation, response models",
+      "Async SQLAlchemy 2.0 ORM + Alembic migrations",
+      "Django ORM: select_related, prefetch_related, Q objects",
+      "Django REST Framework: serializers, viewsets, permissions",
+      "JWT auth: access + refresh tokens, token rotation",
+      "OAuth2 with FastAPI, scopes, PKCE flow",
+      "Password hashing: bcrypt, argon2, salting",
+      "CORS, rate limiting, request throttling",
+      "Git advanced: rebase, cherry-pick, bisect, reflog, stash",
+      "Poetry + pyproject.toml, virtual envs, pip-tools",
+      "Pre-commit hooks: black, ruff, isort, mypy",
+      "Makefile for project automation"
+    ],
+    resources:[
+      {title:"Python & FastAPI",links:[
+        {type:"yt",label:"FastAPI Full Course – Bitfumes",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=7t2alSnE2-I"},
+        {type:"yt",label:"Python Internals Deep Dive – mCoding",sub:"YouTube · Free",url:"https://www.youtube.com/c/mCodingWithJamesMurphy"},
+        {type:"ud",label:"FastAPI – The Complete Course – Udemy",sub:"Udemy · José Salvatierra",url:"https://www.udemy.com/course/fastapi-the-complete-course/"},
+        {type:"doc",label:"FastAPI Official Docs",sub:"fastapi.tiangolo.com",url:"https://fastapi.tiangolo.com"},
+        {type:"doc",label:"Python Docs – asyncio",sub:"docs.python.org",url:"https://docs.python.org/3/library/asyncio.html"}
+      ]},
+      {title:"Django & DRF",links:[
+        {type:"yt",label:"Django REST Framework – Dennis Ivy",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=TmsD8QExZ84"},
+        {type:"ud",label:"Django & DRF – Jose Portilla (Udemy)",sub:"Udemy · Bestseller",url:"https://www.udemy.com/course/django-and-django-rest-framework-with-react-front-end/"},
+        {type:"doc",label:"DRF Official Docs",sub:"django-rest-framework.org",url:"https://www.django-rest-framework.org"}
+      ]},
+      {title:"Auth & Security",links:[
+        {type:"yt",label:"JWT Auth explained – Web Dev Simplified",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=7Q17ubqLfaM"},
+        {type:"doc",label:"OWASP API Security Top 10",sub:"owasp.org",url:"https://owasp.org/www-project-api-security/"}
+      ]}
+    ]
+  },
+  {
+    title:"Database Deep Dive — SQL, NoSQL & Caching",
+    goal:"Build a search service using Postgres + Elasticsearch + Redis caching. Benchmark query optimizations.",
+    color:"#2dd4bf",bg:"rgba(45,212,191,0.15)",icon:"🗄️",
+    skills:["PostgreSQL","Redis","MongoDB","Cassandra","DynamoDB","Elasticsearch","PgBouncer"],
+    topics:[
+      "PostgreSQL: MVCC, vacuum, autovacuum, bloat management",
+      "Indexes: B-tree, GIN, GiST, partial, covering, BRIN",
+      "EXPLAIN ANALYZE, pg_stat_statements, query planner",
+      "CTEs, recursive queries, window functions, lateral joins",
+      "Table partitioning, foreign data wrappers, logical replication",
+      "Redis data structures: strings, hashes, lists, sets, sorted sets, streams",
+      "Caching: cache-aside, write-through, write-behind patterns",
+      "TTL strategies, LRU/LFU eviction policies",
+      "Pub/Sub, Redis Streams for event queues",
+      "Redis Sentinel, Cluster mode, Lua scripting, Redlock",
+      "MongoDB: schema design, aggregation pipeline, Atlas Search",
+      "MongoDB indexing, transactions, change streams",
+      "Cassandra: wide-column model, partition keys, CQL, compaction",
+      "DynamoDB: partition/sort keys, GSI, LSI, single-table design",
+      "CAP theorem tradeoffs per DB",
+      "Elasticsearch: inverted index, mappings, analyzers, BM25",
+      "ES queries: bool, match, term, aggregations, highlight",
+      "Connection pooling: PgBouncer, SQLAlchemy pool config",
+      "ClickHouse basics for analytics workloads"
+    ],
+    resources:[
+      {title:"PostgreSQL",links:[
+        {type:"yt",label:"PostgreSQL Full Course – Dave Gray",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=qw--VYLpxG4"},
+        {type:"ud",label:"SQL & PostgreSQL for Beginners – Jon Avis",sub:"Udemy · Bestseller",url:"https://www.udemy.com/course/sql-and-postgresql/"},
+        {type:"doc",label:"PostgreSQL Official Docs",sub:"postgresql.org",url:"https://www.postgresql.org/docs/"}
+      ]},
+      {title:"Redis",links:[
+        {type:"yt",label:"Redis Crash Course – TechWorld with Nana",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=jgpVdJB2sKQ"},
+        {type:"ud",label:"Redis: The Complete Developer's Guide",sub:"Udemy · Stephen Grider",url:"https://www.udemy.com/course/redis-the-complete-developers-guide-p/"},
+        {type:"doc",label:"Redis Docs",sub:"redis.io/docs",url:"https://redis.io/docs/"}
+      ]},
+      {title:"MongoDB & NoSQL",links:[
+        {type:"yt",label:"MongoDB Full Course – freeCodeCamp",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=-56x56UppqQ"},
+        {type:"ud",label:"MongoDB – The Complete Developer's Guide",sub:"Udemy · Maximilian",url:"https://www.udemy.com/course/mongodb-the-complete-developers-guide/"}
+      ]},
+      {title:"Elasticsearch",links:[
+        {type:"yt",label:"Elasticsearch Tutorial – Amigoscode",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=C3tlMqaNSaI"},
+        {type:"doc",label:"Elasticsearch Official Docs",sub:"elastic.co",url:"https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html"}
+      ]}
+    ]
+  },
+  {
+    title:"Docker, Kubernetes, CI/CD & Linux Internals",
+    goal:"Dockerize all Month 1+2 services. Full K8s deployment with Helm. ArgoCD GitOps pipeline from push to production.",
+    color:"#a855f7",bg:"rgba(168,85,247,0.15)",icon:"🐳",
+    skills:["Docker","Kubernetes","Helm","ArgoCD","GitHub Actions","Jenkins","Trivy","cgroups"],
+    topics:[
+      "Docker: image layers, build cache, multi-stage builds, slim images",
+      "Docker Compose: full local stack (app + Postgres + Redis + ES)",
+      "Volumes, named networks, env files, health checks",
+      "Non-root users, read-only FS, secret injection security",
+      "Image scanning: Trivy, Docker Scout, SBOM generation",
+      "K8s: Pods, Deployments, StatefulSets, DaemonSets, Jobs, CronJobs",
+      "Services (ClusterIP/NodePort/LB), Ingress, NetworkPolicy",
+      "HPA, VPA, resource limits/requests, PodDisruptionBudgets",
+      "ConfigMaps, Secrets, RBAC, ServiceAccounts",
+      "Helm charts: templates, values, hooks, releases",
+      "GitHub Actions: matrix builds, caching, reusable workflows",
+      "Full pipeline: lint → test → build → scan → push → deploy",
+      "GitOps with ArgoCD: sync policies, app-of-apps pattern",
+      "Jenkins: declarative pipeline, shared libraries",
+      "SonarQube, coverage gates, DAST scanning in pipeline",
+      "Linux: process management, signals, namespaces, cgroups",
+      "File descriptors, epoll, select, non-blocking I/O",
+      "Networking: netstat, ss, tcpdump, iptables, nftables",
+      "Systemd services, journalctl, log rotation, rsyslog",
+      "Performance: vmstat, iostat, perf, strace, lsof"
+    ],
+    resources:[
+      {title:"Docker",links:[
+        {type:"yt",label:"Docker Tutorial for Beginners – TechWorld with Nana",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=3c-iBn73dDE"},
+        {type:"ud",label:"Docker & Kubernetes: Practical Guide – Maximilian",sub:"Udemy · Bestseller",url:"https://www.udemy.com/course/docker-kubernetes-the-practical-guide/"},
+        {type:"doc",label:"Docker Official Docs",sub:"docs.docker.com",url:"https://docs.docker.com"}
+      ]},
+      {title:"Kubernetes",links:[
+        {type:"yt",label:"Kubernetes Full Course – TechWorld with Nana",sub:"YouTube · Free · 4hrs",url:"https://www.youtube.com/watch?v=X48VuDVv0do"},
+        {type:"ud",label:"Kubernetes for Absolute Beginners – KodeKloud",sub:"Udemy · KodeKloud",url:"https://www.udemy.com/course/learn-kubernetes/"},
+        {type:"doc",label:"Kubernetes Official Docs",sub:"kubernetes.io",url:"https://kubernetes.io/docs/home/"}
+      ]},
+      {title:"CI/CD & GitOps",links:[
+        {type:"yt",label:"GitHub Actions Full Course – TechWorld with Nana",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=mFFXuXjVgkU"},
+        {type:"yt",label:"ArgoCD Tutorial – TechWorld with Nana",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=MeU5_k9ssrs"},
+        {type:"doc",label:"GitHub Actions Docs",sub:"docs.github.com",url:"https://docs.github.com/en/actions"}
+      ]},
+      {title:"Linux Internals",links:[
+        {type:"yt",label:"Linux Internals – Low Level Learning",sub:"YouTube · Free",url:"https://www.youtube.com/c/LowLevelLearning"},
+        {type:"ud",label:"Linux Internals for DevOps – Udemy",sub:"Udemy · Jason Cannon",url:"https://www.udemy.com/course/linux-administration-bootcamp/"}
+      ]}
+    ]
+  },
+  {
+    title:"Cloud — AWS + Azure",
+    goal:"Full app on AWS with Terraform + Ansible. AKS deploy on Azure. OpenTelemetry tracing. Prometheus + Grafana dashboards live.",
+    color:"#f59e0b",bg:"rgba(245,158,11,0.15)",icon:"☁️",
+    skills:["AWS","Azure","Terraform","Pulumi","AWS CDK","Ansible","OpenTelemetry","Grafana"],
+    topics:[
+      "AWS IAM: roles, policies, SCP, permission boundaries, cross-account",
+      "EC2, ASG, ALB, Target Groups, launch templates",
+      "S3: bucket policies, versioning, lifecycle, presigned URLs",
+      "RDS (multi-AZ, read replicas), Aurora, ElastiCache, DynamoDB",
+      "EKS, ECR, ECS Fargate, CloudFront, Route53, ACM",
+      "Azure AD, RBAC, managed identities, service principals",
+      "AKS (managed K8s), ACR, App Service",
+      "Azure Blob Storage, Cosmos DB, Azure SQL",
+      "Azure Service Bus vs Event Hub vs Event Grid",
+      "Azure Key Vault, VNet, NSGs, Application Gateway",
+      "Terraform: modules, workspaces, remote state (S3 + DynamoDB lock)",
+      "Terraform Cloud, sentinel policies, drift detection",
+      "Ansible: playbooks, roles, inventory, vault for secrets",
+      "Pulumi basics (IaC in Python)",
+      "AWS CDK with Python — L1/L2/L3 constructs",
+      "Prometheus: metrics, PromQL, recording rules, alertmanager",
+      "Grafana: dashboards, panels, templating, alert channels",
+      "ELK: Logstash pipelines, ES index templates, Kibana",
+      "OpenTelemetry: traces + metrics + logs, Python SDK, collectors",
+      "SLOs, SLIs, SLAs, error budgets, burn rate alerts"
+    ],
+    resources:[
+      {title:"AWS",links:[
+        {type:"yt",label:"AWS Full Course – freeCodeCamp",sub:"YouTube · Free · 5hrs",url:"https://www.youtube.com/watch?v=SOTamWNgDKc"},
+        {type:"ud",label:"Ultimate AWS Certified Developer – Stephane Maarek",sub:"Udemy · Top Rated",url:"https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/"},
+        {type:"doc",label:"AWS Documentation",sub:"docs.aws.amazon.com",url:"https://docs.aws.amazon.com"}
+      ]},
+      {title:"Terraform & IaC",links:[
+        {type:"yt",label:"Terraform Full Course – TechWorld with Nana",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=7xngnjfIlK4"},
+        {type:"ud",label:"HashiCorp Terraform Associate Certification",sub:"Udemy · Zeal Vora",url:"https://www.udemy.com/course/terraform-beginner-to-advanced/"},
+        {type:"doc",label:"Terraform Docs",sub:"developer.hashicorp.com",url:"https://developer.hashicorp.com/terraform/docs"}
+      ]},
+      {title:"Azure",links:[
+        {type:"yt",label:"Azure Full Course – freeCodeCamp",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=NKEFWyqJ5XA"},
+        {type:"ud",label:"AZ-900: Microsoft Azure Fundamentals – Scott Duffy",sub:"Udemy · Bestseller",url:"https://www.udemy.com/course/az900-azure/"}
+      ]},
+      {title:"Observability",links:[
+        {type:"yt",label:"Prometheus & Grafana Tutorial – TechWorld with Nana",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=h4Sl21AKiDg"},
+        {type:"doc",label:"OpenTelemetry Python Docs",sub:"opentelemetry.io",url:"https://opentelemetry.io/docs/languages/python/"}
+      ]}
+    ]
+  },
+  {
+    title:"Messaging Systems, Microservices & Async Architecture",
+    goal:"Event-driven order processing system — FastAPI + Kafka + Celery + Redis. Saga pattern for distributed transactions.",
+    color:"#ec4899",bg:"rgba(236,72,153,0.15)",icon:"📨",
+    skills:["Kafka","RabbitMQ","Celery","SQS/SNS","Istio","gRPC","Saga","Outbox"],
+    topics:[
+      "Kafka architecture: brokers, ZooKeeper vs KRaft, topic internals",
+      "Producers: acks, batching, linger.ms, compression, retries",
+      "Consumers: group coordination, partition assignment, lag",
+      "Exactly-once semantics, idempotent producers, transactions",
+      "Kafka Streams, KSQL, Schema Registry + Avro/Protobuf",
+      "RabbitMQ: exchanges (direct/topic/fanout/headers), DLQ, priority queues",
+      "Celery + Redis/RabbitMQ: tasks, chains, chords, canvas",
+      "AWS SQS/SNS: fan-out pattern, FIFO queues, DLQ, visibility timeout",
+      "Azure Service Bus: topics, subscriptions, sessions, dedup",
+      "API Gateway (Kong, AWS API GW, Nginx), BFF pattern",
+      "Service mesh: Istio / Linkerd — mTLS, traffic shaping, observability",
+      "Circuit breaker (tenacity), bulkhead, retry with jitter",
+      "Saga: choreography (Kafka events) vs orchestration (Temporal)",
+      "Outbox pattern, transactional messaging, idempotency keys",
+      "FastAPI + asyncio: background tasks, lifespan, WebSockets",
+      "aiokafka, aio-pika for async message consumption",
+      "Celery beat for scheduled tasks, monitoring with Flower",
+      "gRPC with Python: protobuf, streaming RPCs, interceptors",
+      "GraphQL with Strawberry / Ariadne: schema, resolvers, subscriptions"
+    ],
+    resources:[
+      {title:"Kafka",links:[
+        {type:"yt",label:"Apache Kafka for Beginners – TechWorld with Nana",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=Ch5VhJzaoaI"},
+        {type:"ud",label:"Apache Kafka Series – Stephane Maarek",sub:"Udemy · Top Rated",url:"https://www.udemy.com/course/apache-kafka/"},
+        {type:"doc",label:"Kafka Official Docs",sub:"kafka.apache.org",url:"https://kafka.apache.org/documentation/"}
+      ]},
+      {title:"Microservices & Patterns",links:[
+        {type:"yt",label:"Microservices Explained – TechWorld with Nana",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=T-m7ZFxeg1A"},
+        {type:"ud",label:"Microservices with Node JS and React – Stephen Grider",sub:"Udemy · Bestseller",url:"https://www.udemy.com/course/microservices-with-node-js-and-react/"},
+        {type:"doc",label:"microservices.io Patterns",sub:"microservices.io",url:"https://microservices.io/patterns/index.html"}
+      ]},
+      {title:"gRPC & GraphQL",links:[
+        {type:"yt",label:"gRPC Crash Course – Traversy Media",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=Yw4rkaTc0f8"},
+        {type:"doc",label:"Strawberry GraphQL Docs",sub:"strawberry.rocks",url:"https://strawberry.rocks/docs"}
+      ]}
+    ]
+  },
+  {
+    title:"System Design",
+    goal:"Whiteboard 10+ systems end-to-end. Build rate limiter + social feed in Python. Complete 8 recorded mock SD sessions.",
+    color:"#22c55e",bg:"rgba(34,197,94,0.15)",icon:"🏗️",
+    skills:["CAP/PACELC","Raft/Paxos","Consistent hashing","LSM trees","Sharding","Feed design","Payment systems"],
+    topics:[
+      "CAP, PACELC theorems — real-world DB choices",
+      "Consistency models: linearizable, sequential, causal, eventual",
+      "Consensus: Raft, Paxos — how etcd/ZooKeeper work internally",
+      "Clocks: logical (Lamport), vector clocks, hybrid logical clocks",
+      "Two-phase commit, three-phase commit, distributed transactions",
+      "Sharding: range, hash, consistent hashing, virtual nodes, rebalancing",
+      "Replication: leader-follower, leaderless (Dynamo-style), quorum reads/writes",
+      "LSM trees vs B-trees — how Cassandra vs Postgres store data",
+      "Column-oriented storage (Parquet, ClickHouse) for analytics",
+      "Bloom filters, skip lists, merkle trees in distributed systems",
+      "Design: URL shortener, paste bin, web crawler",
+      "Design: Rate limiter (token bucket, sliding window, fixed window)",
+      "Design: Notification system at 10M users/day",
+      "Design: Social feed — fan-out on write vs read",
+      "Design: Distributed cache (design Redis from scratch), CDN",
+      "Design: Video streaming platform (YouTube) — chunking, transcoding",
+      "Design: Ride-sharing (Uber/Ola) — geohashing, matching, surge pricing",
+      "Design: Payment system — idempotency, double-spend, reconciliation",
+      "Design: Distributed job scheduler (Airflow-like) — DAG execution, retries",
+      "Design: Search engine — type-ahead, full-text + ranking"
+    ],
+    resources:[
+      {title:"System Design Theory",links:[
+        {type:"yt",label:"System Design Fundamentals – Gaurav Sen",sub:"YouTube · Free · Playlist",url:"https://www.youtube.com/playlist?list=PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX"},
+        {type:"yt",label:"System Design Interview – Alex Xu (Walkthrough)",sub:"YouTube · Free",url:"https://www.youtube.com/c/ByteByteGo"},
+        {type:"ud",label:"Rocking System Design – Rajesh Shetty",sub:"Udemy · Top Rated",url:"https://www.udemy.com/course/rocking-system-design/"}
+      ]},
+      {title:"Books & Articles",links:[
+        {type:"doc",label:"Designing Data-Intensive Applications (DDIA)",sub:"Book by Martin Kleppmann — must read",url:"https://dataintensive.net/"},
+        {type:"doc",label:"System Design Primer – GitHub",sub:"github.com/donnemartin",url:"https://github.com/donnemartin/system-design-primer"},
+        {type:"doc",label:"ByteByteGo Newsletter",sub:"blog.bytebytego.com",url:"https://blog.bytebytego.com"}
+      ]},
+      {title:"DSA & Leetcode",links:[
+        {type:"yt",label:"Neetcode 150 – Neetcode.io",sub:"YouTube · Free · Full playlist",url:"https://www.youtube.com/c/NeetCode"},
+        {type:"doc",label:"Leetcode – Practice platform",sub:"leetcode.com",url:"https://leetcode.com"},
+        {type:"ud",label:"Master the Coding Interview – Andrei Neagoie",sub:"Udemy · Bestseller",url:"https://www.udemy.com/course/master-the-coding-interview-data-structures-algorithms/"}
+      ]}
+    ]
+  },
+  {
+    title:"Performance, Security & Testing",
+    goal:"200+ Leetcode solved, 4+ live projects, cleared mock system designs. Actively applying for 30 LPA+ roles with confidence.",
+    color:"#ef4444",bg:"rgba(239,68,68,0.15)",icon:"🔒",
+    skills:["py-spy","Locust","Vault","Falco","pytest","testcontainers","mutmut","DSA"],
+    topics:[
+      "Profiling: cProfile, py-spy, memory_profiler, scalene",
+      "Async performance: uvloop, connection reuse, concurrency limits",
+      "Load testing: k6, Locust, Vegeta — read flame graphs",
+      "DB performance: N+1, slow query log, EXPLAIN ANALYZE in prod",
+      "C extensions, Cython, PyPy tradeoffs for hot paths",
+      "OWASP Top 10: injection, XSS, CSRF, IDOR, SSRF, XXE — fix each",
+      "Secrets: HashiCorp Vault, AWS Secrets Manager, Azure Key Vault",
+      "Container security: Trivy, Falco runtime security, OPA/Gatekeeper",
+      "Dependency scanning: pip-audit, Snyk, Dependabot",
+      "Threat modelling: STRIDE, attack surface review, pen-test basics",
+      "pytest mastery: fixtures, parametrize, conftest, plugins",
+      "Integration tests: testcontainers-python (real Postgres, Redis, Kafka)",
+      "Contract testing: Pact Python, consumer-driven contracts",
+      "Mutation testing: mutmut, measuring test suite quality",
+      "Load testing in CI, chaos engineering basics (Chaos Monkey)",
+      "200+ Leetcode problems solved (Easy + Medium + Hard)",
+      "4+ production-grade projects deployed",
+      "8+ mock system design sessions recorded",
+      "Resume + LinkedIn optimized for 30 LPA+ roles",
+      "Active job applications + referral network built"
+    ],
+    resources:[
+      {title:"Python Performance & Testing",links:[
+        {type:"yt",label:"pytest Full Course – Pixegami",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=cHYq1MRoyI0"},
+        {type:"ud",label:"Python Testing with pytest – Udemy",sub:"Udemy · Brian Okken",url:"https://www.udemy.com/course/pytest-course/"},
+        {type:"doc",label:"pytest Docs",sub:"docs.pytest.org",url:"https://docs.pytest.org"}
+      ]},
+      {title:"Security Engineering",links:[
+        {type:"yt",label:"OWASP Top 10 Explained – Computerphile",sub:"YouTube · Free",url:"https://www.youtube.com/results?search_query=owasp+top+10+computerphile"},
+        {type:"ud",label:"Web Security & Bug Bounty – Udemy",sub:"Udemy · Top Rated",url:"https://www.udemy.com/course/web-security-and-bug-bounty-learn-penetration-testing/"},
+        {type:"doc",label:"HashiCorp Vault Docs",sub:"developer.hashicorp.com",url:"https://developer.hashicorp.com/vault/docs"}
+      ]},
+      {title:"Load Testing & Chaos",links:[
+        {type:"yt",label:"Locust Load Testing – Traversy Media",sub:"YouTube · Free",url:"https://www.youtube.com/watch?v=uvs4OKCV9_4"},
+        {type:"doc",label:"k6 Load Testing Docs",sub:"k6.io/docs",url:"https://k6.io/docs/"}
+      ]}
+    ]
+  }
+];
+
+const STORAGE_KEY = 'devpath_v2';
+
+function loadState(){
+  try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{};}catch(e){return{};}
+}
+function saveState(s){localStorage.setItem(STORAGE_KEY,JSON.stringify(s));}
+
+let state = loadState();
+
+function getKey(m,t){return `m${m}_t${t}`;}
+
+function calcMonth(mi){
+  const topics = MONTHS[mi].topics;
+  let done=0;
+  topics.forEach((_,ti)=>{if(state[getKey(mi,ti)])done++;});
+  return {done,total:topics.length,pct:Math.round(done/topics.length*100)};
+}
+
+function calcOverall(){
+  let done=0,total=0;
+  MONTHS.forEach((_,mi)=>{const c=calcMonth(mi);done+=c.done;total+=c.total;});
+  return {done,total,pct:total?Math.round(done/total*100):0};
+}
+
+function updateOverall(){
+  const o=calcOverall();
+  document.getElementById('overall-fill').style.width=o.pct+'%';
+  document.getElementById('overall-stat').textContent=`${o.done} of ${o.total} tasks complete — ${o.pct}% overall`;
+  MONTHS.forEach((_,mi)=>{
+    const c=calcMonth(mi);
+    const tab=document.getElementById('tab-'+mi);
+    if(tab){
+      tab.classList.toggle('done',c.pct===100);
+    }
+  });
+}
+
+function buildHome(){
+  const grid=document.getElementById('month-grid');
+  grid.innerHTML='';
+  MONTHS.forEach((m,mi)=>{
+    const c=calcMonth(mi);
+    const card=document.createElement('div');
+    card.className='month-card'+(c.pct===100?' complete':'');
+    card.innerHTML=`
+      <div class="mc-top">
+        <div class="mc-num" style="background:${m.bg};color:${m.color}">M${mi+1}</div>
+        <div>
+          <div class="mc-title">${m.title}</div>
+          <div class="mc-sub">${m.skills.slice(0,4).join(' · ')}${m.skills.length>4?' · ...':''}</div>
+        </div>
+      </div>
+      <div class="mc-bar-wrap"><div class="mc-bar" style="width:${c.pct}%;background:${m.color}"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="mc-pct">${c.done}/${c.total} tasks · ${c.pct}%</div>
+        ${c.pct===100?'<span class="badge-done">Complete ✓</span>':''}
+      </div>`;
+    card.onclick=()=>showPage(mi);
+    grid.appendChild(card);
+  });
+}
+
+function buildMonthPage(mi){
+  const m=MONTHS[mi];
+  const c=calcMonth(mi);
+  const wrap=document.createElement('div');
+  wrap.id=`month-${mi}`;
+  wrap.className='month-page';
+
+  let topicsHTML=m.topics.map((t,ti)=>{
+    const k=getKey(mi,ti);
+    const checked=!!state[k];
+    return `<div class="topic-item${checked?' checked':''}" onclick="toggleTopic(${mi},${ti})" id="ti-${mi}-${ti}">
+      <div class="chk${checked?' on':''}" id="chk-${mi}-${ti}"></div>
+      <div class="topic-text" id="tt-${mi}-${ti}">${t}</div>
+    </div>`;
+  }).join('');
+
+  let resHTML=m.resources.map(rb=>`
+    <div class="res-block">
+      <div class="res-block-title">${rb.title}</div>
+      <div class="res-links">
+        ${rb.links.map(l=>`
+          <a class="res-link" href="${l.url}" target="_blank" rel="noopener">
+            <div class="res-icon ${l.type}">${l.type==='yt'?'▶':l.type==='ud'?'U':'📄'}</div>
+            <div class="res-meta"><b>${l.label}</b><span>${l.sub}</span></div>
+            <span class="res-arrow">↗</span>
+          </a>`).join('')}
+      </div>
+    </div>`).join('');
+
+  wrap.innerHTML=`
+    <button class="back-btn" onclick="showPage('home')">← Back to Overview</button>
+    <div id="banner-${mi}" class="complete-banner" style="display:${c.pct===100?'flex':'none'}">
+      <div class="cb-icon">🎉</div>
+      <div class="cb-text"><b>Month ${mi+1} Complete!</b><span>Excellent work — move on to Month ${mi+2<=7?mi+2:'the job search'}!</span></div>
+    </div>
+    <div class="month-header">
+      <div class="mh-top">
+        <div class="mh-icon" style="background:${m.bg}">${m.icon}</div>
+        <div class="mh-info">
+          <h2>Month ${mi+1}: ${m.title}</h2>
+          <p>🎯 ${m.goal}</p>
+          <div class="mh-stats">
+            <div class="mh-stat"><b>${m.topics.length}</b> topics</div>
+            <div class="mh-stat"><b>${m.resources.reduce((a,r)=>a+r.links.length,0)}</b> resources</div>
+            <div class="mh-stat"><b>~${m.topics.length*3}hrs</b> estimated</div>
+          </div>
+        </div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-wrap"><div class="progress-fill" id="pf-${mi}" style="width:${c.pct}%;background:${m.color}"></div></div>
+        <div class="progress-pct" id="pp-${mi}" style="color:${m.color}">${c.pct}%</div>
+        <button class="reset-btn" onclick="resetMonth(${mi})">Reset</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Skills You'll Learn</div>
+      <div class="skills-wrap">${m.skills.map(s=>`<span class="skill-chip">${s}</span>`).join('')}</div>
+    </div>
+    <div class="section">
+      <div class="section-title">Topics Checklist</div>
+      <div class="topics-grid">${topicsHTML}</div>
+    </div>
+    <div class="section">
+      <div class="section-title">Resources</div>
+      <div class="resources-outer">${resHTML}</div>
+    </div>`;
+  document.getElementById('page-months').appendChild(wrap);
+}
+
+function toggleTopic(mi,ti){
+  const k=getKey(mi,ti);
+  state[k]=!state[k];
+  saveState(state);
+  const item=document.getElementById(`ti-${mi}-${ti}`);
+  const chk=document.getElementById(`chk-${mi}-${ti}`);
+  const tt=document.getElementById(`tt-${mi}-${ti}`);
+  if(state[k]){item.classList.add('checked');chk.classList.add('on');tt.style.textDecoration='line-through';}
+  else{item.classList.remove('checked');chk.classList.remove('on');tt.style.textDecoration='';}
+  const c=calcMonth(mi);
+  document.getElementById(`pf-${mi}`).style.width=c.pct+'%';
+  document.getElementById(`pp-${mi}`).textContent=c.pct+'%';
+  const banner=document.getElementById(`banner-${mi}`);
+  if(c.pct===100){banner.style.display='flex';launchConfetti();}
+  else{banner.style.display='none';}
+  updateOverall();
+  buildHome();
+}
+
+function resetMonth(mi){
+  MONTHS[mi].topics.forEach((_,ti)=>{
+    const k=getKey(mi,ti);
+    delete state[k];
+    const item=document.getElementById(`ti-${mi}-${ti}`);
+    const chk=document.getElementById(`chk-${mi}-${ti}`);
+    const tt=document.getElementById(`tt-${mi}-${ti}`);
+    if(item){item.classList.remove('checked');chk.classList.remove('on');tt.style.textDecoration='';}
+  });
+  saveState(state);
+  document.getElementById(`pf-${mi}`).style.width='0%';
+  document.getElementById(`pp-${mi}`).textContent='0%';
+  document.getElementById(`banner-${mi}`).style.display='none';
+  updateOverall();
+  buildHome();
+}
+
+let currentPage='home';
+function showPage(p){
+  document.getElementById('page-home').style.display=p==='home'?'block':'none';
+  document.querySelectorAll('.month-page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+  if(p==='home'){
+    document.getElementById('tab-home').classList.add('active');
+    buildHome();
+  } else {
+    const mp=document.getElementById(`month-${p}`);
+    if(mp)mp.classList.add('active');
+    document.getElementById('tab-'+p).classList.add('active');
+  }
+  currentPage=p;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// CONFETTI
+function launchConfetti(){
+  const canvas=document.getElementById('confetti-canvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const pieces=[];
+  const colors=['#4f8ef7','#a855f7','#2dd4bf','#22c55e','#f59e0b','#ec4899'];
+  for(let i=0;i<120;i++){
+    pieces.push({x:Math.random()*canvas.width,y:-20,r:Math.random()*6+3,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      vx:(Math.random()-0.5)*4,vy:Math.random()*4+2,rot:Math.random()*360,vr:(Math.random()-0.5)*8});
+  }
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.color;ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);ctx.restore();
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.vy+=0.05;
+    });
+    frame++;
+    if(frame<180)requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+
+// INIT
+MONTHS.forEach((_,mi)=>buildMonthPage(mi));
+buildHome();
+updateOverall();
+showPage('home');
+</script>
+</body>
+</html>
